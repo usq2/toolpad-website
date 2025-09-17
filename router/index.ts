@@ -65,4 +65,6 @@ const routes: RouteObject[] = [
     ],
   },
 ];
-export const AppRoutes = createBrowserRouter(routes);
+export const AppRoutes = createBrowserRouter(routes, {
+  basename: "/toolpad-website",
+});
