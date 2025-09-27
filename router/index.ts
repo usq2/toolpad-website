@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import { HomePage } from "../src/pages/HomePage";
-import DocxToPdf from "../src/pages/DocxToPdf";
-import { StringConvert } from "../src/pages/StringConvert";
+// import DocxToPdf from "../src/pages/DocxToPdf";
+// import { StringConvert } from "../src/pages/StringConvert";
 import { EncodeDecodeHomePage } from "../src/pages/DevTools/EncodeDecode/HomePage";
 import { StringBase64 } from "../src/pages/DevTools/EncodeDecode/StringToBase64";
 import { StringHex } from "../src/pages/DevTools/EncodeDecode/StringToHex";
@@ -11,6 +11,10 @@ import { Base64Hex } from "../src/pages/DevTools/EncodeDecode/Base64ToHex";
 import { HexBase64 } from "../src/pages/DevTools/EncodeDecode/HexToBase64";
 import { Base64String } from "../src/pages/DevTools/EncodeDecode/Base64ToString";
 import { HexString } from "../src/pages/DevTools/EncodeDecode/HexToString";
+import { XMLFormatter } from "../src/pages/DevTools/XMLFormatter/XMLFormatter";
+import { XMLFormatterHomePage } from "../src/pages/DevTools/XMLFormatter/HomePage";
+import { TextToXMLFormatter } from "../src/pages/DevTools/XMLFormatter/TexttoXML";
+import { TextToJSONFormatter } from "../src/pages/DevTools/JSONFormatter/TextToJson";
 // const HomePage = await import("../src/pages/DocxToPdf")
 // const HomePage = lazy(() => import ("../src/pages/DocxToPdf"))
 // const HomePage = lazy(() => import ("../src/pages/DocxToPdf"))
@@ -20,10 +24,6 @@ const routes: RouteObject[] = [
   {
     path: "/",
     Component: HomePage,
-  },
-  {
-    path: "/docx-to-pdf",
-    Component: DocxToPdf,
   },
   {
     path: "/encode-decode",
@@ -61,6 +61,25 @@ const routes: RouteObject[] = [
       {
         path: "hex-to-string",
         Component: HexString,
+      },
+    ],
+  },
+  {
+    path: "/xml-json-formatter",
+    Component: XMLFormatterHomePage,
+    children: [
+      {
+        path: "read-xml-from-file",
+        Component: XMLFormatter,
+        index: true,
+      },
+      {
+        path: "read-xml-from-text",
+        Component: TextToXMLFormatter,
+      },
+      {
+        path: "read-json-from-text",
+        Component: TextToJSONFormatter,
       },
     ],
   },

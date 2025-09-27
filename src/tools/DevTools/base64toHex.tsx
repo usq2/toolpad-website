@@ -34,7 +34,7 @@ export const StringToHex = (pStr: string) => {
   return hex;
 };
 
-export const Base64ToString = (pBase64) => {
+export const Base64ToString = (pBase64: string) => {
   if (!pBase64) {
     return "";
   }
@@ -47,7 +47,7 @@ export const Base64ToString = (pBase64) => {
 
   return decodedString;
 };
-export const HexToString = (pHex) => {
+export const HexToString = (pHex: string) => {
   if (!pHex) {
     return "";
   }

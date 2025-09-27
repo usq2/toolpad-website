@@ -1,6 +1,14 @@
-import { BaseSyntheticEvent, useState, useEffect } from "react";
+import { BaseSyntheticEvent, useState, useEffect, FC, ReactNode } from "react";
 
-export const LongTextInput = ({
+export const LongTextInput: FC<{
+  placeholder?: string;
+  rows?: number;
+  value: string;
+  className?: string;
+  onChange?: Function;
+  copyComponent?: ReactNode;
+  validComponent?: ReactNode;
+}> = ({
   placeholder,
   rows = 8,
   value = "",

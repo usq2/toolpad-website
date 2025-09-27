@@ -1,26 +1,14 @@
-import { useState, useEffect } from "react";
-export const ThemeSwitcher = () => {
-  const [darkMode, setDarkMode] = useState(false);
-  useEffect(() => {
-    let theme = localStorage.getItem("theme");
-    if (!theme) {
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        localStorage.setItem("theme", "dark");
+import { useEffect, useState } from "react";
+import { AppThemes, useTheme } from "../../hooks/useTheme";
 
-        theme = "dark";
-      } else {
-        localStorage.setItem("theme", "light");
-        theme = "light";
-      }
-    }
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-      setDarkMode(true);
-    } else {
-      document.documentElement.classList.remove("dark");
-      setDarkMode(false);
-    }
-  }, []);
+export const ThemeSwitcher = () => {
+  const { getTheme, setTheme } = useTheme();
+  const [darkMode, setDarkMode] = useState(() =>
+    getTheme() === AppThemes.DARK ? true : false
+  );
+  useEffect(() => {
+    setDarkMode(() => (getTheme() === AppThemes.DARK ? true : false));
+  }, [getTheme()]);
   return (
     <div
       className={`
@@ -32,8 +20,10 @@ export const ThemeSwitcher = () => {
         //if theme is light its being set to dark
         if (!darkMode) {
           document.documentElement.classList.add("dark");
+          setTheme(AppThemes.DARK);
         } else {
           document.documentElement.classList.remove("dark");
+          setTheme(AppThemes.LIGHT);
         }
         setDarkMode(!darkMode);
       }}

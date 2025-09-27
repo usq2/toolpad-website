@@ -1,14 +1,17 @@
+import { FC } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const SideMenu = ({ Links }) => {
+export const SideMenu: FC<{
+  Links: Array<{ label: string; onClick: Function }>;
+}> = ({ Links }) => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   return (
     <>
       {/* Mobile hamburger toggle */}
-      <div className="md:hidden fixed top-0 p-4  bg-red-300 text-white flex justify-between items-center">
+      <div className="md:hidden fixed top-0 p-4  bg-dark-surface text-white flex justify-between items-center">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="focus:outline-none"
@@ -42,7 +45,7 @@ export const SideMenu = ({ Links }) => {
 
       {/* Side menu */}
       <nav
-        className={`fixed top-0 bottom-0 left-0 w-64 bg-red-300 text-white p-6 space-y-4 transform transition-transform duration-300 ease-in-out
+        className={`fixed top-0 bottom-0 left-0 shadow-default w-64 dark:bg-dark-surface bg-primary dark:text-text-primary text-dark-text-secondary p-6 space-y-4 transform transition-transform duration-300 ease-in-out
           ${
             isOpen ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 md:relative md:w-56 md:p-4 md:space-y-6`}
@@ -83,7 +86,7 @@ export const SideMenu = ({ Links }) => {
                 onClick={() => {
                   if (link.onClick) link.onClick(navigate);
                 }}
-                className="block px-4 py-2 rounded hover:bg-red-600 transition-colors cursor-pointer"
+                className="block px-4 py-2 rounded hover:bg-background hover:text-primary dark:hover:bg-dark-background dark:hover:text-dark-surface transition-colors cursor-pointer"
               >
                 {link.label}
               </span>

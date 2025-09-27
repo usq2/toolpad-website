@@ -31,7 +31,7 @@ export const StringHex = () => {
   const ButtonComponent = (
     <Button
       title="Convert"
-      onClick={(event) => {
+      onClick={() => {
         let hex = StringToHex(string);
         setHexText(hex);
       }}

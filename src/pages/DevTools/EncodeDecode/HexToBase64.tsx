@@ -29,7 +29,7 @@ export const HexBase64 = () => {
   const ButtonComponent = (
     <Button
       title="Convert"
-      onClick={(event) => {
+      onClick={() => {
         let hex = HexToBase64(base64Text);
         setHexText(hex);
       }}

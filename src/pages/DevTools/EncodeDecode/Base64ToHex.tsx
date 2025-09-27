@@ -28,7 +28,7 @@ export const Base64Hex = () => {
   const ButtonComponent = (
     <Button
       title="Convert"
-      onClick={(event) => {
+      onClick={() => {
         let hex = Base64ToHex(base64Text);
         setHexText(hex);
       }}

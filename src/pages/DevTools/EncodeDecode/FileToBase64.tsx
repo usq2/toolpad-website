@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import { LongTextInput } from "../../../components/ui/LongTextInput";
 import { Copy } from "../../../components/ui/CopyIcon";
 import { ConvertFileToBase64 } from "../../../tools/DevTools/FileToBase64Hex";
@@ -8,18 +8,17 @@ import { TwoColumnTemplate } from "../../../components/Templates/TwoColumnTempla
 export const FileBase64 = () => {
   const [base64Text, setBase64Text] = useState("");
 
-  const convert = async (file) => {
+  const convert = async (file: File | Blob) => {
     if (file) {
       const base64String = await ConvertFileToBase64(file);
-      console.log(base64String);
       setBase64Text(base64String as string); // Includes the MIME type
     }
   };
-  async function ReadFile(event) {
+  async function ReadFile(event: BaseSyntheticEvent) {
     const file = event.target.files[0];
     await convert(file);
   }
-  async function ReadURL(event) {
+  async function ReadURL(event: BaseSyntheticEvent) {
     const file = event.target.value;
     const response = await fetch(file);
     const blob = await response.blob();
@@ -29,8 +28,8 @@ export const FileBase64 = () => {
 
   const FileComponent = (
     <FileUpload
-      onFileChange={async (e) => await ReadFile(e)}
-      onUrlChange={async (e) => await ReadURL(e)}
+      onFileChange={async (e: BaseSyntheticEvent) => await ReadFile(e)}
+      onUrlChange={async (e: BaseSyntheticEvent) => await ReadURL(e)}
     />
   );
   const Base64Component = (

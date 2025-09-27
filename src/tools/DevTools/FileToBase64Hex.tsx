@@ -1,4 +1,4 @@
-export function ConvertFileToBase64(file) {
+export function ConvertFileToBase64(file: File | Blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = function () {
@@ -12,7 +12,7 @@ export function ConvertFileToBase64(file) {
 }
 
 //read file as array buffer then convert to hex
-export function ConvertFileToHex(file) {
+export function ConvertFileToHex(file: File | Blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = function () {

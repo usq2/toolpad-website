@@ -1,9 +1,13 @@
-import { ReactElement } from "react";
+import { ReactElement, FC } from "react";
 import Logo from "../../assets/tools-svgrepo-com.svg";
 import DevToolsLogo from "../../assets/dev.svg";
 import { useNavigate } from "react-router-dom";
 
-const ToolsLogo = ({ src, text, onClick }) => {
+const ToolsLogo: FC<{
+  text: string;
+  onClick: Function | null;
+  src: string;
+}> = ({ src, text, onClick }) => {
   const handleClick = () => {
     if (onClick) {
       onClick();
@@ -15,11 +19,13 @@ const ToolsLogo = ({ src, text, onClick }) => {
       onClick={handleClick}
     >
       <img className="size-16 shrink-1" src={src} />
-      <span className="dark:text-white text-xs text-center">{text}</span>
+      <span className="dark:text-dark-text-primary text-xs text-center">
+        {text}
+      </span>
     </div>
   );
 };
-export const ToolsGrid = ({ data }) => {
+export const ToolsGrid: FC<{ data: number }> = ({ data }) => {
   const numRows = data / 6;
   const style = `grid md:grid-rows-${numRows} grid-rows-${
     numRows * 2
@@ -35,11 +41,20 @@ export const ToolsGrid = ({ data }) => {
       text={"String Manipulation Tools"}
     />
   );
+  grid.push(
+    <ToolsLogo
+      src={DevToolsLogo}
+      onClick={() => {
+        navigate("/xml-json-formatter/read-xml-from-text");
+      }}
+      text={"XML/JSON Formatting"}
+    />
+  );
   for (let i = 1; i < data; i++) {
     grid.push(<ToolsLogo src={Logo} onClick={null} text={"dev in progress"} />);
   }
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center bg-background dark:bg-dark-background">
       <div className={style}>{grid}</div>
     </div>
   );

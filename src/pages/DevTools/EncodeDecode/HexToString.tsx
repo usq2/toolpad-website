@@ -32,7 +32,7 @@ export const HexString = () => {
   const ButtonComponent = (
     <Button
       title="Convert"
-      onClick={(event) => {
+      onClick={() => {
         let hex = HexToString(string);
         setHexText(hex);
       }}

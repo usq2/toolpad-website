@@ -1,9 +1,17 @@
-import { BaseSyntheticEvent } from "react";
+import {
+  BaseSyntheticEvent,
+  ButtonHTMLAttributes,
+  FC,
+  HTMLAttributes,
+} from "react";
 
-export const Button = ({
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  title: string;
+}
+export const Button: FC<ButtonProps> = ({
   title = "Click",
   onClick,
-  className = " bg-red-300 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded w-full my-3",
+  className = " hover:bg-background hover:text-primary font-semibold py-3 px-6 rounded w-full my-3 dark:bg-dark-surface bg-primary",
   ...otherProps
 }) => {
   const handleClick = (event: BaseSyntheticEvent) => {
@@ -12,7 +20,11 @@ export const Button = ({
     }
   };
   return (
-    <button className={className} onClick={onClick} {...otherProps}>
+    <button
+      className={className}
+      onClick={(e: BaseSyntheticEvent) => handleClick(e)}
+      {...otherProps}
+    >
       {title}
     </button>
   );

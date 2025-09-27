@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import { LongTextInput } from "../../../components/ui/LongTextInput";
 import { Copy } from "../../../components/ui/CopyIcon";
 import { ConvertFileToHex } from "../../../tools/DevTools/FileToBase64Hex";
@@ -8,17 +8,17 @@ import { TwoColumnTemplate } from "../../../components/Templates/TwoColumnTempla
 export const FileHex = () => {
   const [hexText, setHexText] = useState("");
 
-  const convert = async (file) => {
+  const convert = async (file: File | Blob) => {
     if (file) {
       const hexString = await ConvertFileToHex(file);
       setHexText(hexString as string); // Includes the MIME type
     }
   };
-  async function ReadFile(event) {
+  async function ReadFile(event: BaseSyntheticEvent) {
     const file = event.target.files[0];
     await convert(file);
   }
-  async function ReadURL(event) {
+  async function ReadURL(event: BaseSyntheticEvent) {
     const file = event.target.value;
     const response = await fetch(file);
     const blob = await response.blob();
@@ -27,8 +27,8 @@ export const FileHex = () => {
   }
   const FileComponent = (
     <FileUpload
-      onFileChange={async (e) => await ReadFile(e)}
-      onUrlChange={async (e) => await ReadURL(e)}
+      onFileChange={async (e: BaseSyntheticEvent) => await ReadFile(e)}
+      onUrlChange={async (e: BaseSyntheticEvent) => await ReadURL(e)}
     />
   );
   const HexInput = (

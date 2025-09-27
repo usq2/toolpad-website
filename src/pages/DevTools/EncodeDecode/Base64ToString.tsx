@@ -28,7 +28,7 @@ export const Base64String = () => {
   const ButtonComponent = (
     <Button
       title="Convert"
-      onClick={(event) => {
+      onClick={() => {
         let stringVal = Base64ToString(base64Text);
         setString(stringVal);
       }}
