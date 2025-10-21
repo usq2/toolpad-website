@@ -4,7 +4,7 @@ export default function FileUpload({ onFileChange, onUrlChange }) {
   const fileInputRef = useRef(null);
 
   return (
-    <div className="flex flex-col justify-center items-center w-full max-w-md mx-auto p-6 dark:bg-grey-700 dark:text-white shadow-lg h-full my-2 border border-gray-300 rounded-lg">
+    <div className="flex flex-col justify-center items-center w-full max-w-md mx-auto p-6 dark:bg-gray-700 dark:text-white shadow-lg h-full my-2 border border-gray-300 rounded-lg">
       <label
         htmlFor="fileInput"
         className="flex flex-col items-center p-4 rounded cursor-pointer hover:bg-grey-800 transition-colors duration-200"
@@ -45,7 +45,7 @@ export default function FileUpload({ onFileChange, onUrlChange }) {
       <input
         type="url"
         placeholder="Enter file URL"
-        className="w-full p-2 rounded dark:bg-grey-700 dark:placeholder-white/70 dark:text-white border dark:border-white/20 focus:outline-none dark:focus:border-white"
+        className="w-full p-2 rounded dark:bg-gray-700 dark:placeholder-white/70 dark:text-white border dark:border-white/20 focus:outline-none dark:focus:border-white"
         onChange={onUrlChange}
       />
     </div>

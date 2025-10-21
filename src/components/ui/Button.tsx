@@ -11,7 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button: FC<ButtonProps> = ({
   title = "Click",
   onClick,
-  className = " hover:bg-background hover:text-primary font-semibold py-3 px-6 rounded w-full my-3 dark:bg-dark-surface bg-primary",
+  className = " hover:bg-orange-100 hover:text-primary text-white font-semibold py-3 px-6 rounded w-1/2 my-3 bg-orange",
   ...otherProps
 }) => {
   const handleClick = (event: BaseSyntheticEvent) => {

@@ -15,18 +15,28 @@ export const XMLFormatterHomePage = () => {
               onClick: (navigate: NavigateFunction) => {
                 navigate("read-xml-from-file");
               },
+              link: "read-xml-from-file",
             },
             {
               label: "Read XML From Text",
               onClick: (navigate: NavigateFunction) => {
                 navigate("read-xml-from-text");
               },
+              link: "read-xml-from-text",
             },
             {
               label: "Read JSON From Text",
               onClick: (navigate: NavigateFunction) => {
                 navigate("read-json-from-text");
               },
+              link: "read-json-from-text",
+            },
+            {
+              label: "Read JSON From File",
+              onClick: (navigate: NavigateFunction) => {
+                navigate("read-json-from-file");
+              },
+              link: "read-json-from-file",
             },
           ]}
         />

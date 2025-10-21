@@ -4,7 +4,7 @@ import { Button } from "../components/ui/Button";
 import { TopHeader } from "../components/HomePage/TopHeader";
 import { Base64ToHex, HexToBase64 } from "../tools/DevTools/base64toHex";
 import { Copy } from "../components/ui/CopyIcon";
-import SideMenu from "../components/ui/SideMenu";
+import { SideMenu } from "../components/ui/SideMenu";
 
 export const Base64ToHexpage = () => {
   const [base64Text, setBase64Text] = useState("");

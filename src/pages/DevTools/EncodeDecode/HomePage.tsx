@@ -15,48 +15,56 @@ export const EncodeDecodeHomePage = () => {
               onClick: (navigate: NavigateFunction) => {
                 navigate("string-to-base64");
               },
+              link: "string-to-base64",
             },
             {
               label: "String To Hex",
               onClick: (navigate: NavigateFunction) => {
                 navigate("string-to-hex");
               },
+              link: "string-to-hex",
             },
             {
               label: "File To Base64",
               onClick: (navigate: NavigateFunction) => {
                 navigate("file-to-base64");
               },
+              link: "file-to-base64",
             },
             {
               label: "File To Hex",
               onClick: (navigate: NavigateFunction) => {
                 navigate("file-to-hex");
               },
+              link: "file-to-hex",
             },
             {
               label: "Base64 To Hex",
               onClick: (navigate: NavigateFunction) => {
                 navigate("base64-to-hex");
               },
+              link: "base64-to-hex",
             },
             {
               label: "Base64 To String",
               onClick: (navigate: NavigateFunction) => {
-                navigate("string-to-base64");
+                navigate("base64-to-string");
               },
+              link: "base64-to-string",
             },
             {
               label: "Hex To Base64",
               onClick: (navigate: NavigateFunction) => {
                 navigate("hex-to-base64");
               },
+              link: "hex-to-base64",
             },
             {
               label: "Hex To String",
               onClick: (navigate: NavigateFunction) => {
                 navigate("hex-to-string");
               },
+              link: "hex-to-string",
             },
           ]}
         />

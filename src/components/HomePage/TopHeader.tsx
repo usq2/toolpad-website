@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 export const TopHeader = memo(() => {
   const navigate = useNavigate();
   return (
-    <div className="flex px-4 py-2 flex-12 dark:bg-dark-surface bg-primary justify-between shadow-default">
+    <div className="flex px-4 py-2 flex-12 dark:bg-gray-700 bg-primary justify-between">
       <img
         className="size-10 shrink-1"
         src={Logo}

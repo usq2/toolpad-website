@@ -12,8 +12,8 @@ export const TwoColumnTemplate: FC<{
       >
         <span> Ad Goes Here</span>
       </div>
-      <div className="flex  w-full justify-center items-center flex-grow my-2">
-        <div className="flex flex-col-reverse md:flex-row w-full justify-center items-center mx-3 my-2 h-full">
+      <div className="flex w-full justify-center items-center flex-grow my-2">
+        <div className="flex flex-col-reverse md:flex-row w-full justify-center items-center mx-3 mt-2 h-3/4 gap-5">
           {Column1}
           {Column2}
         </div>

@@ -15,18 +15,19 @@ import { XMLFormatter } from "../src/pages/DevTools/XMLFormatter/XMLFormatter";
 import { XMLFormatterHomePage } from "../src/pages/DevTools/XMLFormatter/HomePage";
 import { TextToXMLFormatter } from "../src/pages/DevTools/XMLFormatter/TexttoXML";
 import { TextToJSONFormatter } from "../src/pages/DevTools/JSONFormatter/TextToJson";
+import { JSONFormatter } from "../src/pages/DevTools/JSONFormatter/FileToJson";
 // const HomePage = await import("../src/pages/DocxToPdf")
 // const HomePage = lazy(() => import ("../src/pages/DocxToPdf"))
 // const HomePage = lazy(() => import ("../src/pages/DocxToPdf"))
 // const HomePage = lazy(() => import ("../src/pages/DocxToPdf"))
 
-const routes: RouteObject[] = [
+export const routes: RouteObject[] = [
   {
     path: "/",
     Component: HomePage,
   },
   {
-    path: "/encode-decode",
+    path: "/tool-encode-decode",
     Component: EncodeDecodeHomePage,
     children: [
       {
@@ -65,7 +66,7 @@ const routes: RouteObject[] = [
     ],
   },
   {
-    path: "/xml-json-formatter",
+    path: "/tool-xml-json-formatter",
     Component: XMLFormatterHomePage,
     children: [
       {
@@ -81,9 +82,13 @@ const routes: RouteObject[] = [
         path: "read-json-from-text",
         Component: TextToJSONFormatter,
       },
+      {
+        path: "read-json-from-file",
+        Component: JSONFormatter,
+      },
     ],
   },
 ];
 export const AppRoutes = createBrowserRouter(routes, {
-  basename: "/toolpad-website",
+  basename: "/",
 });

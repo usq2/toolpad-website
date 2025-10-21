@@ -7,7 +7,7 @@ export const HomePage = () => {
     <>
       <TopHeader />
       <HeaderBanner />
-      <ToolsGrid data={30} />
+      <ToolsGrid />
     </>
   );
 };

@@ -1,20 +1,26 @@
+@import url("https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400;1,700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:is(.dark *));
 @theme {
-  --color-primary: #1e3a8a;
-  --color-secondary: #fbbf24;
-  --color-background: #f9fafb;
-  --color-surface: #111827;
-  --color-text-primary: #111827;
-  --color-text-secondary: #374151;
-  --color-border-primary: #e5e7eb;
-
-  --color-dark-primary: #60a5fa;
-  --color-dark-secondary: #fbbf24;
-  --color-dark-background: #111827;
-  --color-dark-surface: #f9fafb;
-  --color-dark-text-primary: #f9fafb;
-  --color-dark-text-secondary: #d1d5db;
-  --color-dark-border: #374151;
+  --color-orange: #ff9800;
+  --color-orange-100: #ff6f20;
+  --color-orange-300: #ffcc80;
+  --color-orange-hover: #ff6f20;
+  --color-orange-hover-bg: #fff3e0;
+  --color-orange-active: #ff8f00;
+  --color-orange-muted: #ffb74d;
+  --color-white-bg: #ffffff;
+  --color-white-soft: #f9fafb;
   --shadow-default: 2px 10px 12px rgba(0, 0, 0, 0.3);
+  --font-roboto: "Roboto", sans-serif;
 }
+
+/* Base Orange	#FF9800	Buttons, key accents
+Accent Orange	#FF6F20	Icon fills, badges, subtle highlights
+Soft Orange	#FFCC80	Backgrounds, card fills
+Hover Orange	#FFA726	Button hover, link hover
+Active Orange	#FF8F00	Button active/pressed
+Border/Muted	#FFB74D	Border, muted or disabled state
+Background White	#FFFFFF	Overall pages, cards, neutral sections
+Soft White	#F9FAFB	Slight variant for cards/inputs
+Hover BG	#FFF3E0	Soft hover backgrounds */
