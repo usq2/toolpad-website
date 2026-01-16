@@ -3,6 +3,7 @@ import FileUpload from "../../../components/ui/FileUpload";
 import { TwoColumnTemplate } from "../../../components/Templates/TwoColumnTemplate";
 import { CodeEditor } from "../../../components/ui/CodeEditor";
 import { Copy } from "../../../components/ui/CopyIcon";
+import { FormatXml } from "../../../tools/DevTools/XmlFormatter";
 export const XMLFormatter = () => {
   const [xmlText, setXmlText] = useState("");
   function readXmlFile(file: any, callback: any) {
@@ -10,10 +11,14 @@ export const XMLFormatter = () => {
     reader.onload = (e) => callback(e.target!.result);
     reader.readAsText(file);
   }
+  const formatAndSetXML = (fileData: string) => {
+    let data = FormatXml(fileData);
+    setXmlText(data);
+  };
   const handleFileChange = (e: BaseSyntheticEvent) => {
     const file = e.target.files[0];
     if (file) {
-      readXmlFile(file, setXmlText);
+      readXmlFile(file, formatAndSetXML);
     }
   };
   return (
