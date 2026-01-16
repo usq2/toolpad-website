@@ -1,6 +1,6 @@
 import { ReactElement, FC } from "react";
-import Logo from "../../assets/tools-svgrepo-com.svg";
 import DevToolsLogo from "../../assets/dev.svg";
+import DocxToPdf from "../../assets/docx-to-pdf.svg";
 import DataConvertLogo from "../../assets/data-convert.svg";
 import { useNavigate } from "react-router-dom";
 
@@ -48,6 +48,13 @@ export const ToolsGrid = () => {
       onClick: () => navigate("/tool-xml-json-formatter/read-xml-from-text"),
       text: "XML/JSON Formatting",
       subtext: "Prettify XML, JSON from file or from text",
+    },
+    {
+      id: "docx-to-pdf",
+      src: DocxToPdf,
+      onClick: () => navigate("/docx-to-pdf"),
+      text: "Convert simple docx to pdf",
+      subtext: "Convert Word Docs without uploading to a server",
     },
   ];
 

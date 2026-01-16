@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import { HomePage } from "../src/pages/HomePage";
-// import DocxToPdf from "../src/pages/DocxToPdf";
+import DocxToPdf from "../src/pages/DocxToPdf";
 // import { StringConvert } from "../src/pages/StringConvert";
 import { EncodeDecodeHomePage } from "../src/pages/DevTools/EncodeDecode/HomePage";
 import { StringBase64 } from "../src/pages/DevTools/EncodeDecode/StringToBase64";
@@ -25,6 +25,10 @@ export const routes: RouteObject[] = [
   {
     path: "/",
     Component: HomePage,
+  },
+  {
+    path: "/docx-to-pdf",
+    Component: DocxToPdf,
   },
   {
     path: "/tool-encode-decode",
