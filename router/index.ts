@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouteObject } from "react-router-dom";
 import { HomePage } from "../src/pages/HomePage";
-import DocxToPdf from "../src/pages/DocxToPdf";
+import DocxToPdf from "../src/pages/DevTools/DocxToPdf/DocxToPdf";
 // import { StringConvert } from "../src/pages/StringConvert";
 import { EncodeDecodeHomePage } from "../src/pages/DevTools/EncodeDecode/HomePage";
 import { StringBase64 } from "../src/pages/DevTools/EncodeDecode/StringToBase64";
@@ -16,6 +16,7 @@ import { XMLFormatterHomePage } from "../src/pages/DevTools/XMLFormatter/HomePag
 import { TextToXMLFormatter } from "../src/pages/DevTools/XMLFormatter/TexttoXML";
 import { TextToJSONFormatter } from "../src/pages/DevTools/JSONFormatter/TextToJson";
 import { JSONFormatter } from "../src/pages/DevTools/JSONFormatter/FileToJson";
+import { DocxToPDFHomePage } from "../src/pages/DevTools/DocxToPdf/HomePage";
 // const HomePage = await import("../src/pages/DocxToPdf")
 // const HomePage = lazy(() => import ("../src/pages/DocxToPdf"))
 // const HomePage = lazy(() => import ("../src/pages/DocxToPdf"))
@@ -27,8 +28,15 @@ export const routes: RouteObject[] = [
     Component: HomePage,
   },
   {
-    path: "/docx-to-pdf",
-    Component: DocxToPdf,
+    path: "/tool-docx-to-pdf",
+    Component: DocxToPDFHomePage,
+    children: [
+      {
+        path: "docx-to-pdf",
+        Component: DocxToPdf,
+        index: true,
+      },
+    ],
   },
   {
     path: "/tool-encode-decode",

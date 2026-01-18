@@ -42,6 +42,8 @@ export const StringHex = () => {
   );
   return (
     <TwoColumnTemplate
+      header={"String to Hex"}
+      subHeader="Convert a string to a hex encoded string"
       Column1={StringInputComponent}
       Column2={HexInputComponent}
       ButtonComponent={ButtonComponent}

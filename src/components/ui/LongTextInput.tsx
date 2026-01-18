@@ -31,7 +31,7 @@ export const LongTextInput: FC<{
   }
 
   return (
-    <div className="flex flex-col w-full h-full p-3 border border-gray-300 rounded-lg resize-y text-base font-sans focus:outline-none focus:ring-2 focus:ring-blue-500  dark:bg-gray-800">
+    <div className="flex flex-col w-full h-full p-3 rounded-xl resize-y text-base font-sans focus:outline-none focus:ring-2 focus:ring-blue-500  dark:bg-gray-800 bg-white">
       <textarea
         value={internalValue}
         style={{ resize: "none" }}

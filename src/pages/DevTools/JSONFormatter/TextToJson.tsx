@@ -10,6 +10,8 @@ export const TextToJSONFormatter = () => {
   const [formatted, setFormatted] = useState("");
   return (
     <TwoColumnTemplate
+      header={"Text to JSON"}
+      subHeader="Convert a JSON string to JSON"
       Column1={
         <div className="w-full md:w-1/3 h-full">
           <LongTextInput

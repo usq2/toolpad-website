@@ -39,6 +39,8 @@ export const Base64Hex = () => {
   );
   return (
     <TwoColumnTemplate
+      header="Base64 to Hex"
+      subHeader="Convert a base64 encoded string to a hex encoded string"
       Column1={Base64Component}
       Column2={HexComponent}
       ButtonComponent={ButtonComponent}
