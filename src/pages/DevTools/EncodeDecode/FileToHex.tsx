@@ -43,6 +43,8 @@ export const FileHex = () => {
   );
   return (
     <TwoColumnTemplate
+      header={"File to Hex"}
+      subHeader="Convert file contents to a hex encoded string"
       Column1={FileComponent}
       Column2={HexInput}
       ButtonComponent={null}

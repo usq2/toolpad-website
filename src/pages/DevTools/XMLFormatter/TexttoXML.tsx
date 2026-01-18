@@ -12,6 +12,8 @@ export const TextToXMLFormatter = () => {
 
   return (
     <TwoColumnTemplate
+      header={"Text to XML"}
+      subHeader="Convert a XML string to XML"
       Column1={
         <div className="w-full md:w-1/3 h-full">
           <LongTextInput

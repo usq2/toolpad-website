@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import CopyIcon from "../../assets/copy.svg";
-import CopyIconSuccess from "../../assets/copy-success.svg";
+import CopyIcon from "/copy.svg";
+import CopyIconSuccess from "/copy-success.svg";
 
 export const Copy = ({ text }) => {
   const [copied, setCopied] = useState(false);

@@ -44,6 +44,8 @@ export const FileBase64 = () => {
   );
   return (
     <TwoColumnTemplate
+      header={"File to Base64"}
+      subHeader="Convert file contents to a base64 encoded string"
       Column1={FileComponent}
       Column2={Base64Component}
       ButtonComponent={null}

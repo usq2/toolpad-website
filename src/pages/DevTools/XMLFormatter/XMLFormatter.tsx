@@ -23,6 +23,8 @@ export const XMLFormatter = () => {
   };
   return (
     <TwoColumnTemplate
+      header={"File to XML"}
+      subHeader="Format the contents of a XML file"
       Column1={
         <FileUpload
           onFileChange={(e: BaseSyntheticEvent) => handleFileChange(e)}

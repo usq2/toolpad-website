@@ -40,6 +40,8 @@ export const HexBase64 = () => {
   );
   return (
     <TwoColumnTemplate
+      header={"Hex to Base64"}
+      subHeader="Convert a hex encoded string to a base64 encoded string"
       Column1={HexComponent}
       Column2={Base64Component}
       ButtonComponent={ButtonComponent}

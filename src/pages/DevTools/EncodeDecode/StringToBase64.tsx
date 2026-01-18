@@ -42,6 +42,8 @@ export const StringBase64 = () => {
   );
   return (
     <TwoColumnTemplate
+      header="String to Base64"
+      subHeader="Convert a string to a base64 encoded string"
       Column1={StringInputComponent}
       Column2={Base64InputComponent}
       ButtonComponent={ButtonComponent}
