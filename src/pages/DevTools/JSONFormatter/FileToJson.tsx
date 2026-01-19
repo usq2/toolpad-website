@@ -18,6 +18,8 @@ export const JSONFormatter = () => {
   };
   return (
     <TwoColumnTemplate
+      header={"File to JSON"}
+      subHeader="Format the contents of a JSON file"
       Column1={
         <FileUpload
           onFileChange={(e: BaseSyntheticEvent) => handleFileChange(e)}
