@@ -23,8 +23,8 @@ export default function FileUpload({ onFileChange, onUrlChange }) {
             strokeLinejoin="round"
           />
         </svg>
-        <span className="font-semibold text-lg">Upload File</span>
-        <span className="text-sm mt-1">Choose your file to upload</span>
+        <span className="font-semibold text-lg">Open File</span>
+        <span className="text-sm mt-1">Choose your file to format</span>
         <input
           id="fileInput"
           type="file"
