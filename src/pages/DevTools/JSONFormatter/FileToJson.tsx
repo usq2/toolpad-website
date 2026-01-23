@@ -13,7 +13,7 @@ export const JSONFormatter = () => {
   const handleFileChange = (e: BaseSyntheticEvent) => {
     const file = e.target.files[0];
     if (file) {
-      readXmlFile(file, jsonText);
+      readXmlFile(file, setJSONText);
     }
   };
   return (
