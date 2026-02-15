@@ -181,6 +181,39 @@ export interface TableStyleInfo {
     >
   >;
 }
+
+export type TableBordersObj = {
+  top: {
+    style: string;
+    thickness: number;
+    color: string;
+  };
+  bottom: {
+    style: string;
+    thickness: number;
+    color: string;
+  };
+  left: {
+    style: string;
+    thickness: number;
+    color: string;
+  };
+  right: {
+    style: string;
+    thickness: number;
+    color: string;
+  };
+  insideH: {
+    style: string;
+    thickness: number;
+    color: string;
+  };
+  insideV: {
+    style: string;
+    thickness: number;
+    color: string;
+  };
+};
 // OOXML conditional formatting types (ST_TblStyleOverrideType)
 type TblStyleOverrideType =
   | "wholeTable" // tblPr for entire table
