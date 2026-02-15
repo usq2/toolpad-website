@@ -54,7 +54,7 @@ export const ToolsGrid = () => {
     {
       id: "docx-to-pdf",
       src: DocxToPdf,
-      onClick: () => navigate("/docx-to-pdf"),
+      onClick: () => navigate("/tool-docx-to-pdf/docx-to-pdf"),
       text: "Convert simple docx to pdf",
       subtext: "Convert Simple Word Docs to pdf",
     },
@@ -70,7 +70,7 @@ export const ToolsGrid = () => {
         text={elem.text}
         subtext={elem.subtext}
         key={elem.id}
-      />
+      />,
     );
   });
 

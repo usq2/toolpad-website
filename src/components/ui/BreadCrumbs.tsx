@@ -51,7 +51,7 @@ export const BreadCrumbs = () => {
   };
   return (
     <div
-      className="relative inline-flex flex-col max-h-12 max-w-1/2"
+      className="relative inline-flex flex-col max-h-12 max-w-fit mb-4"
       ref={dropdownRef}
     >
       {/* Trigger */}
@@ -84,7 +84,7 @@ export const BreadCrumbs = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="absolute top-full left-3/6 mt-2 w-60 rounded-2xl
+            className="absolute top-full right-0 mt-2 w-60 rounded-2xl
                        bg-white dark:bg-gray-900
                        shadow-xl ring-1 ring-black/5
                        z-50"

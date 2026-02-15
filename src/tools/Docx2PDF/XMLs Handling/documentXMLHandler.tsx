@@ -6,11 +6,8 @@ import {
   Content,
   Paragraph,
   TableCell,
-  TableCellStyle,
   TableElement,
   TableRow,
-  TableStyleInfo,
-  TableRowStyle,
   Image,
   NumberingMap,
 } from "../types/types";
@@ -28,13 +25,13 @@ export class DocumentParser {
     pDocumentXML: string,
     pStyles: Styles,
     pZip: JSZip,
-    pNumbersMap: NumberingMap | undefined
+    pNumbersMap: NumberingMap | undefined,
   ) {
     this._vParser = new DOMParser();
     this._vStyles = pStyles;
     this._vDocDOM = this._vParser.parseFromString(
       pDocumentXML,
-      "application/xml"
+      "application/xml",
     );
     this._vNumbersMap = pNumbersMap;
     this._vZip = pZip;
@@ -69,11 +66,11 @@ export class DocumentParser {
   }
 
   private async parseParagraph(
-    p: Element
+    p: Element,
   ): Promise<Paragraph | ListElement | Image | null> {
     const styleId = this.getAttr(
       p.getElementsByTagName("w:pStyle")[0],
-      "w:val"
+      "w:val",
     );
     const styles = styleId
       ? this._vStyles.getStyleById(styleId)
@@ -113,7 +110,7 @@ export class DocumentParser {
 
     // Extract Grid
     const gridCols = Array.from(tbl.getElementsByTagName("w:gridCol")).map(
-      (col) => this.twipsToPoints(this.getAttr(col, "w:w"))
+      (col) => this.twipsToPoints(this.getAttr(col, "w:w")),
     );
 
     for (let i = 0; i < trs.length; i++) {
@@ -129,11 +126,7 @@ export class DocumentParser {
     };
   }
 
-  private parseTableRow(
-    tr: Element,
-    gridCols: number[],
-    rowIdx: number
-  ): TableRow {
+  private parseTableRow(tr: Element, gridCols: number[]): TableRow {
     const cells: TableCell[] = [];
     const tcs = Array.from(tr.getElementsByTagName("w:tc"));
 
@@ -144,7 +137,7 @@ export class DocumentParser {
       cells,
       style: {
         height: this.twipsToPoints(
-          this.getAttr(tr.querySelector("trHeight"), "w:val")
+          this.getAttr(tr.querySelector("trHeight"), "w:val"),
         ),
       },
     };
@@ -191,22 +184,22 @@ export class DocumentParser {
     const pageMar = sectPr[0].getElementsByTagName("w:pgMar")[0];
     return {
       pageWidth: this.twipsToPoints(
-        pageSize?.getAttribute("w:w") || this.DEFAULT_PAGE_HEIGHT
+        pageSize?.getAttribute("w:w") || this.DEFAULT_PAGE_HEIGHT,
       ),
       pageHeight: this.twipsToPoints(
-        pageSize?.getAttribute("w:h") || this.DEFAULT_PAGE_WIDTH
+        pageSize?.getAttribute("w:h") || this.DEFAULT_PAGE_WIDTH,
       ),
       marginTop: this.twipsToPoints(
-        pageMar?.getAttribute("w:top") || this.DEFAULT_MARGIN_TOP
+        pageMar?.getAttribute("w:top") || this.DEFAULT_MARGIN_TOP,
       ),
       marginBottom: this.twipsToPoints(
-        pageMar?.getAttribute("w:bottom") || this.DEFAULT_MARGIN_BOTTOM
+        pageMar?.getAttribute("w:bottom") || this.DEFAULT_MARGIN_BOTTOM,
       ),
       marginLeft: this.twipsToPoints(
-        pageMar?.getAttribute("w:left") || this.DEFAULT_MARGIN_LEFT
+        pageMar?.getAttribute("w:left") || this.DEFAULT_MARGIN_LEFT,
       ),
       marginRight: this.twipsToPoints(
-        pageMar?.getAttribute("w:right") || this.DEFAULT_MARGIN_RIGHT
+        pageMar?.getAttribute("w:right") || this.DEFAULT_MARGIN_RIGHT,
       ),
     };
   }
@@ -220,6 +213,7 @@ export class DocumentParser {
     const relationships = new Map<string, string>();
 
     const doc = new DOMParser().parseFromString(rels, "application/xml");
+    // all tags under relationship , in order to get the images
     const relNodes = doc.getElementsByTagName("Relationship");
 
     for (let i = 0; i < relNodes.length; i++) {
@@ -231,6 +225,7 @@ export class DocumentParser {
         const id = rel.getAttribute("Id");
         const target = rel.getAttribute("Target");
         if (id && target) {
+          // maintain a map of relationships
           relationships.set(id, target);
         }
       }

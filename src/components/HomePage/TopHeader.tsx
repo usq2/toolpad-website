@@ -20,8 +20,6 @@ export const TopHeader = memo(() => {
       </div>
       <div className="flex justify-end items-center">
         <ThemeSwitcher />
-        {/* <img className="size-10 shrink-1 px-1" src={Logo} />
-        <img className="size-10 shrink-1 px-1" src={Logo} /> */}
       </div>
     </div>
   );

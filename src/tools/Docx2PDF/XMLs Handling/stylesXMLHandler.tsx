@@ -1,4 +1,10 @@
-import { BasicStyle, StylesMap, TableStyle, ThemeFonts } from "../types/types";
+import {
+  BasicStyle,
+  StylesMap,
+  TableBordersObj,
+  TableStyle,
+  ThemeFonts,
+} from "../types/types";
 
 // Need to further improve it by mapping all styles while class creation
 export class Styles {
@@ -6,7 +12,7 @@ export class Styles {
     this._vParser = new DOMParser();
     this._vStylesDOM = this._vParser.parseFromString(
       pStylesXML,
-      "application/xml"
+      "application/xml",
     );
     this.themeFonts = pThemeFonts;
     this.defaultStyles = this.getDefaultStyles();
@@ -15,15 +21,15 @@ export class Styles {
 
   private getDefaultStyles() {
     const defaultStyleNode = Array.from(
-      this._vStylesDOM.getElementsByTagNameNS(this.NAMESPACE, "docDefaults")
+      this._vStylesDOM.getElementsByTagNameNS(this.NAMESPACE, "docDefaults"),
     );
     let runDefaults = Array.from(
-      defaultStyleNode[0].getElementsByTagNameNS(this.NAMESPACE, "rPrDefault")
+      defaultStyleNode[0].getElementsByTagNameNS(this.NAMESPACE, "rPrDefault"),
     );
     let defaultStyle: BasicStyle | null = this.parseCommonStyles(
       runDefaults[0],
       "default",
-      this.themeFonts
+      this.themeFonts,
     );
     return defaultStyle;
   }
@@ -31,7 +37,7 @@ export class Styles {
     const stylesMap: StylesMap = {};
     const styles = this._vStylesDOM.getElementsByTagNameNS(
       this.NAMESPACE,
-      "style"
+      "style",
     ); // All <w:style>
 
     for (let i = 0; i < styles.length; i++) {
@@ -45,7 +51,7 @@ export class Styles {
         stylesMap[styleIdAttr] = this.parseCommonStyles(
           styleNode,
           styleIdAttr,
-          this.themeFonts
+          this.themeFonts,
         );
       }
     }
@@ -65,10 +71,38 @@ export class Styles {
     return parseInt(twips, 10) / 20;
   };
 
+  private commonBorderHelper(pElement: Element) {
+    let retval = {
+      color: "",
+      thickness: 0,
+      space: 0,
+    };
+    const val =
+      pElement.getAttributeNS(this.NAMESPACE, "val") ||
+      pElement.getAttribute("w:val");
+    if (val && val !== "nil") {
+      const sz =
+        pElement.getAttributeNS(this.NAMESPACE, "sz") ||
+        pElement.getAttribute("w:sz") ||
+        "0";
+      const space =
+        pElement.getAttributeNS(this.NAMESPACE, "space") ||
+        pElement.getAttribute("w:space") ||
+        "0";
+      const color =
+        pElement.getAttributeNS(this.NAMESPACE, "color") ||
+        pElement.getAttribute("w:color") ||
+        "000000";
+      retval.color = "#" + color;
+      retval.thickness = parseInt(sz, 10) / 8;
+      retval.space = parseInt(space, 10);
+    }
+    return retval;
+  }
   public parseCommonStyles(
     styleNode: Element,
     styleId: string,
-    themeFonts?: ThemeFonts
+    themeFonts?: ThemeFonts,
   ): BasicStyle {
     const s: BasicStyle = {
       fontFamily: this.defaultStyles?.fontFamily!,
@@ -142,7 +176,7 @@ export class Styles {
 
       const vertAlign = rPr.getElementsByTagNameNS(
         this.NAMESPACE,
-        "vertAlign"
+        "vertAlign",
       )[0];
       if (vertAlign) {
         const v = vertAlign.getAttributeNS(this.NAMESPACE, "val");
@@ -230,7 +264,7 @@ export class Styles {
       }
       const contextualSpacing = pPr.getElementsByTagNameNS(
         this.NAMESPACE,
-        "contextualSpacing "
+        "contextualSpacing ",
       )[0];
       if (contextualSpacing) {
         s.contextualSpacing = true;
@@ -238,7 +272,7 @@ export class Styles {
       // outline level (for headings)
       const outlineLvl = pPr.getElementsByTagNameNS(
         this.NAMESPACE,
-        "outlineLvl"
+        "outlineLvl",
       )[0];
       if (outlineLvl) {
         const v =
@@ -265,61 +299,80 @@ export class Styles {
       if (pBdr) {
         const top = pBdr.getElementsByTagNameNS(this.NAMESPACE, "top")[0];
         if (top) {
-          const val =
-            top.getAttributeNS(this.NAMESPACE, "val") ||
-            top.getAttribute("w:val");
-          if (val && val !== "nil") {
-            const sz =
-              top.getAttributeNS(this.NAMESPACE, "sz") ||
-              top.getAttribute("w:sz") ||
-              "0";
-            const space =
-              top.getAttributeNS(this.NAMESPACE, "space") ||
-              top.getAttribute("w:space") ||
-              "0";
-            const color =
-              top.getAttributeNS(this.NAMESPACE, "color") ||
-              top.getAttribute("w:color") ||
-              "000000";
-            s.borderTop = {
-              color: "#" + color,
-              thickness: parseInt(sz, 10) / 8,
-              space: parseInt(space, 10),
-            };
-          }
+          s.borderTop = this.commonBorderHelper(top);
         }
 
         const bottom = pBdr.getElementsByTagNameNS(this.NAMESPACE, "bottom")[0];
         if (bottom) {
-          const val =
-            bottom.getAttributeNS(this.NAMESPACE, "val") ||
-            bottom.getAttribute("w:val");
-          if (val && val !== "nil") {
-            const sz =
-              bottom.getAttributeNS(this.NAMESPACE, "sz") ||
-              bottom.getAttribute("w:sz") ||
-              "0";
-            const space =
-              bottom.getAttributeNS(this.NAMESPACE, "space") ||
-              bottom.getAttribute("w:space") ||
-              "0";
-            const color =
-              bottom.getAttributeNS(this.NAMESPACE, "color") ||
-              bottom.getAttribute("w:color") ||
-              "000000";
-            s.borderBottom = {
-              color: "#" + color,
-              thickness: parseInt(sz, 10) / 8,
-              space: parseInt(space, 10),
-            };
-          }
+          s.borderBottom = this.commonBorderHelper(bottom);
         }
       }
     }
 
     return s;
   }
+  private parseTableMarginsHelper(
+    pTblCellMargin: Element,
+    stylesMap: TableStyle,
+    pSide: "top" | "left" | "right" | "bottom",
+  ) {
+    const side = pTblCellMargin.getElementsByTagNameNS(
+      this.NAMESPACE,
+      pSide,
+    )[0];
+    if (side) {
+      const val = side.getAttributeNS(this.NAMESPACE, "w");
+      if (val) stylesMap.margins!.top = this.twipsToPt(val);
+    }
+  }
+  private parseTableMargins(pTblCellMargin: Element, stylesMap: TableStyle) {
+    const sides: Array<"top" | "left" | "right" | "bottom"> = [
+      "top",
+      "left",
+      "right",
+      "bottom",
+    ];
+    sides.forEach((side) => {
+      this.parseTableMarginsHelper(pTblCellMargin, stylesMap, side);
+    });
+  }
 
+  private parseTableBorderHelper(
+    pTblBorder: Element,
+    pBorders: TableBordersObj,
+    pSide: "top" | "left" | "right" | "bottom" | "insideH" | "insideV",
+  ) {
+    const side = pTblBorder.getElementsByTagNameNS(this.NAMESPACE, pSide)[0];
+    if (side) {
+      const val = side.getAttributeNS(this.NAMESPACE, "val");
+      const size = side.getAttributeNS(this.NAMESPACE, "size");
+      const color = side.getAttributeNS(this.NAMESPACE, "color");
+      if (val) pBorders[pSide].style = val;
+      if (size) pBorders[pSide].thickness = this.twipsToPt(size);
+      if (color)
+        pBorders[pSide].color = "#" + (color === "auto" ? "000000" : color);
+    }
+  }
+  private parseTableBorder(pTblBorder: Element) {
+    const sides: Array<
+      "top" | "left" | "right" | "bottom" | "insideH" | "insideV"
+    > = ["top", "left", "right", "bottom", "insideH", "insideV"];
+
+    // all the values are assigned in initialization loop
+    let borders: TableBordersObj = {} as TableBordersObj;
+    sides.forEach((side) => {
+      borders[side] = {
+        style: "single",
+        thickness: 0.5,
+        color: "#000000",
+      };
+    });
+
+    sides.forEach((side) => {
+      this.parseTableBorderHelper(pTblBorder, borders, side);
+    });
+    return borders;
+  }
   public parseTableStyles(styleNode: Element, stylesMap: StylesMap) {
     let s: TableStyle = {
       indent: 0,
@@ -335,7 +388,7 @@ export class Styles {
 
     const basedOn = styleNode.getElementsByTagNameNS(
       this.NAMESPACE,
-      "basedOn"
+      "basedOn",
     )[0];
     if (basedOn) {
       const val = basedOn.getAttributeNS(this.NAMESPACE, "val");
@@ -357,128 +410,17 @@ export class Styles {
       }
       const tblCellMar = tblPr.getElementsByTagNameNS(
         this.NAMESPACE,
-        "tblCellMar"
+        "tblCellMar",
       )[0];
       if (tblCellMar) {
-        const top = tblCellMar.getElementsByTagNameNS(this.NAMESPACE, "top")[0];
-        if (top) {
-          const val = top.getAttributeNS(this.NAMESPACE, "w");
-          if (val) s.margins!.top = this.twipsToPt(val);
-        }
-        const left = tblCellMar.getElementsByTagNameNS(
-          this.NAMESPACE,
-          "left"
-        )[0];
-        if (left) {
-          const val = top.getAttributeNS(this.NAMESPACE, "w");
-          if (val) s.margins!.left = this.twipsToPt(val);
-        }
-        const bottom = tblCellMar.getElementsByTagNameNS(
-          this.NAMESPACE,
-          "bottom"
-        )[0];
-        if (bottom) {
-          const val = top.getAttributeNS(this.NAMESPACE, "w");
-          if (val) s.margins!.bottom = this.twipsToPt(val);
-        }
-        const right = tblCellMar.getElementsByTagNameNS(
-          this.NAMESPACE,
-          "right"
-        )[0];
-        if (right) {
-          const val = top.getAttributeNS(this.NAMESPACE, "w");
-          if (val) s.margins!.right = this.twipsToPt(val);
-        }
+        this.parseTableMargins(tblCellMar, s);
       }
       const tblBorders = styleNode.getElementsByTagNameNS(
         this.NAMESPACE,
-        "tblBorders"
+        "tblBorders",
       )[0];
       if (tblBorders) {
-        let borders = {
-          top: { style: "single", thickness: 0.5, color: "#000000" },
-          bottom: { style: "single", thickness: 0.5, color: "#000000" },
-          left: { style: "single", thickness: 0.5, color: "#000000" },
-          right: { style: "single", thickness: 0.5, color: "#000000" },
-          insideH: { style: "single", thickness: 0.5, color: "#000000" },
-          insideV: { style: "single", thickness: 0.5, color: "#000000" },
-        };
-        const top = tblBorders.getElementsByTagNameNS(this.NAMESPACE, "top")[0];
-        if (top) {
-          const val = top.getAttributeNS(this.NAMESPACE, "val");
-          const size = top.getAttributeNS(this.NAMESPACE, "size");
-          const color = top.getAttributeNS(this.NAMESPACE, "color");
-          if (val) borders.top.style = val;
-          if (size) borders.top.thickness = this.twipsToPt(size);
-          if (color)
-            borders.top.color = "#" + (color === "auto" ? "000000" : color);
-        }
-        const left = tblBorders.getElementsByTagNameNS(
-          this.NAMESPACE,
-          "left"
-        )[0];
-        if (left) {
-          const val = left.getAttributeNS(this.NAMESPACE, "val");
-          const size = left.getAttributeNS(this.NAMESPACE, "size");
-          const color = left.getAttributeNS(this.NAMESPACE, "color");
-          if (val) borders.left.style = val;
-          if (size) borders.left.thickness = this.twipsToPt(size);
-          if (color)
-            borders.left.color = "#" + (color === "auto" ? "000000" : color);
-        }
-        const bottom = tblBorders.getElementsByTagNameNS(
-          this.NAMESPACE,
-          "bottom"
-        )[0];
-        if (bottom) {
-          const val = bottom.getAttributeNS(this.NAMESPACE, "val");
-          const size = bottom.getAttributeNS(this.NAMESPACE, "size");
-          const color = bottom.getAttributeNS(this.NAMESPACE, "color");
-          if (val) borders.bottom.style = val;
-          if (size) borders.bottom.thickness = this.twipsToPt(size);
-          if (color)
-            borders.bottom.color = "#" + (color === "auto" ? "000000" : color);
-        }
-        const right = tblBorders.getElementsByTagNameNS(
-          this.NAMESPACE,
-          "right"
-        )[0];
-        if (right) {
-          const val = right.getAttributeNS(this.NAMESPACE, "val");
-          const size = right.getAttributeNS(this.NAMESPACE, "size");
-          const color = right.getAttributeNS(this.NAMESPACE, "color");
-          if (val) borders.right.style = val;
-          if (size) borders.right.thickness = this.twipsToPt(size);
-          if (color)
-            borders.right.color = "#" + (color === "auto" ? "000000" : color);
-        }
-        const insideH = tblBorders.getElementsByTagNameNS(
-          this.NAMESPACE,
-          "insideH"
-        )[0];
-        if (insideH) {
-          const val = insideH.getAttributeNS(this.NAMESPACE, "val");
-          const size = insideH.getAttributeNS(this.NAMESPACE, "size");
-          const color = insideH.getAttributeNS(this.NAMESPACE, "color");
-          if (val) borders.insideH.style = val;
-          if (size) borders.insideH.thickness = this.twipsToPt(size);
-          if (color)
-            borders.insideH.color = "#" + (color === "auto" ? "000000" : color);
-        }
-        const insideV = tblBorders.getElementsByTagNameNS(
-          this.NAMESPACE,
-          "insideV"
-        )[0];
-        if (insideV) {
-          const val = insideV.getAttributeNS(this.NAMESPACE, "val");
-          const size = insideV.getAttributeNS(this.NAMESPACE, "size");
-          const color = insideV.getAttributeNS(this.NAMESPACE, "color");
-          if (val) borders.insideV.style = val;
-          if (size) borders.insideV.thickness = this.twipsToPt(size);
-          if (color)
-            borders.insideV.color = "#" + (color === "auto" ? "000000" : color);
-        }
-        s.borders = borders;
+        s.borders = this.parseTableBorder(tblBorders);
       }
     }
 
